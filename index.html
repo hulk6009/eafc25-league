@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EAFC 25 League Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>EAFC 25 League Table</h1>
+    <div class="filter">
+      <label for="teamFilter">Filter by Team:</label>
+      <select id="teamFilter">
+        <option value="all">All Teams</option>
+      </select>
+    </div>
+    <table id="leagueTable">
+      <thead>
+        <tr>
+          <th>Pos</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Fixtures</h2>
+    <div class="filter">
+      <label for="fixtureFilter">Filter by Team:</label>
+      <select id="fixtureFilter">
+        <option value="all">All Teams</option>
+      </select>
+    </div>
+    <table id="fixtureTable">
+      <thead>
+        <tr>
+          <th>Matchday</th><th>Home Team</th><th>Away Team</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
