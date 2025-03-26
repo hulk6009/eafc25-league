@@ -1,5 +1,5 @@
 const SHEET_ID = '1MobG_dUO9okerGz6QCPsvUoRagTcDl5a';
-const LEAGUE_SHEET = 'League Table';
+const LEAGUE_SHEET = 'Sorted League Table';
 const FIXTURE_SHEET = 'Match Results';
 
 const fetchSheetData = async (sheetName) => {
