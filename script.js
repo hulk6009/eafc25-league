@@ -47,22 +47,81 @@ const populateFilters = (data, selectId, key = 'Team') => {
   });
 };
 
+const calculateLeagueData = (fixtureData, leagueData) => {
+  // Create a map of team stats initialized with zeros
+  const teamStats = {};
+  leagueData.forEach(team => {
+    teamStats[team.Team] = {
+      P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0
+    };
+  });
+
+  // Process each fixture to update team stats
+  fixtureData.forEach(match => {
+    if (!match['Home Team'] || !match['Away Team']) return;
+
+    const homeTeam = match['Home Team'];
+    const awayTeam = match['Away Team'];
+    const homeGoals = parseInt(match['Home Goals'] || 0);
+    const awayGoals = parseInt(match['Away Goals'] || 0);
+
+    // Update games played
+    teamStats[homeTeam].P += 1;
+    teamStats[awayTeam].P += 1;
+
+    // Update goals for and against
+    teamStats[homeTeam].GF += homeGoals;
+    teamStats[homeTeam].GA += awayGoals;
+    teamStats[awayTeam].GF += awayGoals;
+    teamTeam[awayTeam].GA += homeGoals;
+
+    // Update goal difference
+    teamStats[homeTeam].GD = teamStats[homeTeam].GF - teamStats[homeTeam].GA;
+    teamStats[awayTeam].GD = teamStats[awayTeam].GF - teamStats[awayTeam].GA;
+
+    // Update wins/losses/draws and points
+    if (homeGoals > awayGoals) {
+      teamStats[homeTeam].W += 1;
+      teamStats[homeTeam].Pts += 3;
+      teamStats[awayTeam].L += 1;
+    } else if (homeGoals < awayGoals) {
+      teamStats[awayTeam].W += 1;
+      teamStats[awayTeam].Pts += 3;
+      teamStats[homeTeam].L += 1;
+    } else {
+      teamStats[homeTeam].D += 1;
+      teamStats[awayTeam].D += 1;
+      teamStats[homeTeam].Pts += 1;
+      teamStats[awayTeam].Pts += 1;
+    }
+  });
+
+  // Merge with existing league data
+  return leagueData.map(team => ({
+    ...team,
+    ...teamStats[team.Team]
+  }));
+};
+
 const initDashboard = async () => {
   const leagueData = await fetchSheetData(LEAGUE_SHEET);
   const fixtureData = await fetchSheetData(FIXTURE_SHEET);
 
-  populateTable(leagueData, 'leagueTable', ['Pos', 'Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts']);
-  populateTable(fixtureData, 'fixtureTable', ['Matchday', 'Home Team', 'Away Team']);
+  // Calculate proper stats based on fixtures
+  const calculatedLeagueData = calculateLeagueData(fixtureData, leagueData);
 
-  populateFilters(leagueData, 'teamFilter', 'Team');
+  populateTable(calculatedLeagueData, 'leagueTable', ['Pos', 'Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts']);
+  populateTable(fixtureData, 'fixtureTable', ['Matchday', 'Home Team', 'Home Goals', 'Away Goals', 'Away Team']);
+
+  populateFilters(calculatedLeagueData, 'teamFilter', 'Team');
   populateFilters(fixtureData.flatMap(d => [d['Home Team'], d['Away Team']]).map(t => ({ Team: t })), 'fixtureFilter');
 
   document.getElementById('teamFilter').addEventListener('change', e => {
-    populateTable(leagueData, 'leagueTable', ['Pos', 'Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts'], e.target.value);
+    populateTable(calculatedLeagueData, 'leagueTable', ['Pos', 'Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts'], e.target.value);
   });
 
   document.getElementById('fixtureFilter').addEventListener('change', e => {
-    populateTable(fixtureData, 'fixtureTable', ['Matchday', 'Home Team', 'Away Team'], e.target.value);
+    populateTable(fixtureData, 'fixtureTable', ['Matchday', 'Home Team', 'Home Goals', 'Away Goals', 'Away Team'], e.target.value);
   });
 };
 
