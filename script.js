@@ -22,7 +22,14 @@ const populateTable = (data, tableId, fields, filter = 'all') => {
     const tr = document.createElement('tr');
     fields.forEach((field, i) => {
       const td = document.createElement('td');
-      td.textContent = field === 'Pos' ? index + 1 : row[field] || '';
+      // Handle numeric fields that might be zero
+      if (['P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts'].includes(field)) {
+        td.textContent = row[field] || row[field] === 0 ? row[field] : '';
+      } else if (field === 'Pos') {
+        td.textContent = index + 1;
+      } else {
+        td.textContent = row[field] || '';
+      }
       tr.appendChild(td);
     });
     tableBody.appendChild(tr);
