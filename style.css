@@ -1,79 +1,196 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --success-color: #4cc9f0;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f8f9fa;
   margin: 0;
   padding: 20px;
+  color: var(--dark-color);
+  line-height: 1.6;
 }
 
 .container {
-  max-width: 1000px;
-  margin: auto;
+  max-width: 1200px;
+  margin: 30px auto;
   background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.container:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
   text-align: center;
-  color: #333;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+h1::after, h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 3px;
 }
 
 .filter {
-  margin: 20px 0;
+  margin: 30px 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter label {
+  font-weight: 600;
+  color: var(--dark-color);
 }
 
 select {
-  padding: 6px;
+  padding: 10px 15px;
   font-size: 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  background-color: white;
+  color: var(--dark-color);
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 200px;
+}
+
+select:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-  overflow-x: auto;
-  display: block;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 30px 0;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 0 1px #e9ecef;
 }
 
 table thead {
-  background-color: #007bff;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
+  position: sticky;
+  top: 0;
 }
 
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+table th {
+  padding: 15px;
   text-align: center;
-  white-space: nowrap;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+table td {
+  padding: 12px 15px;
+  border-top: 1px solid #e9ecef;
+  text-align: center;
+}
+
+table tbody tr {
+  transition: var(--transition);
 }
 
 table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: rgba(248, 249, 250, 0.5);
 }
 
 table tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: rgba(72, 149, 239, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Modern scrollbar for tables */
+table::-webkit-scrollbar {
+  height: 8px;
+}
+
+table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+table::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
+table::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
 }
 
 @media screen and (max-width: 768px) {
   .container {
-    padding: 15px;
-  }
-
-  .filter {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 20px;
+    margin: 15px auto;
   }
 
   h1, h2 {
     font-size: 1.5rem;
   }
 
+  .filter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
   select {
     width: 100%;
+    min-width: auto;
   }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* Add some micro-interactions */
+button, select, .clickable {
+  transition: var(--transition);
+}
+
+button:hover, select:hover, .clickable:hover {
+  transform: translateY(-1px);
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.loading {
+  animation: pulse 1.5s infinite ease-in-out;
 }
