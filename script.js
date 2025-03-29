@@ -18,45 +18,48 @@ const getFormIndicators = (team, fixtures) => {
   const teamFixtures = fixtures.filter(f => 
     f['Home Team'] === team || f['Away Team'] === team
   ).slice(0, 5); // Get last 5 matches
-  
+
   return teamFixtures.map(f => {
-    if (!f['Home Score'] || !f['Away Score']) return '';
-    
+    const homeScore = f['Home Score'];
+    const awayScore = f['Away Score'];
+
+    if (homeScore === '' || awayScore === '' || homeScore == null || awayScore == null) return '';
+
     const isHome = f['Home Team'] === team;
-    const homeScore = parseInt(f['Home Score']);
-    const awayScore = parseInt(f['Away Score']);
-    
-    if (homeScore === awayScore) return 'D';
-    return (isHome && homeScore > awayScore) || (!isHome && awayScore > homeScore) ? 'W' : 'L';
+    const home = parseInt(homeScore);
+    const away = parseInt(awayScore);
+
+    if (home === away) return 'D';
+    return (isHome && home > away) || (!isHome && away > home) ? 'W' : 'L';
   }).filter(Boolean).reverse(); // Reverse to show most recent last
 };
 
 const populateTable = (data, tableId, fields, filter = 'all', fixtures = []) => {
   const tableBody = document.querySelector(`#${tableId} tbody`);
   tableBody.innerHTML = '';
-  
+
   const filtered = filter === 'all' ? data : data.filter(row => 
     Object.values(row).some(val => val === filter)
   );
-  
+
   filtered.forEach((row, index) => {
     const tr = document.createElement('tr');
-    
+
     fields.forEach(field => {
       const td = document.createElement('td');
-      
+
       if (field === 'Form' && row['Team']) {
         const formIndicators = getFormIndicators(row['Team'], fixtures);
         const formContainer = document.createElement('div');
         formContainer.className = 'form-container';
-        
+
         formIndicators.forEach(indicator => {
           const span = document.createElement('span');
           span.className = `form-indicator form-${indicator === 'W' ? 'win' : indicator === 'L' ? 'loss' : 'draw'}`;
           span.textContent = indicator;
           formContainer.appendChild(span);
         });
-        
+
         td.appendChild(formContainer);
       } 
       else if (field === 'Status') {
@@ -75,10 +78,10 @@ const populateTable = (data, tableId, fields, filter = 'all', fixtures = []) => 
       else {
         td.textContent = row[field] || '';
       }
-      
+
       tr.appendChild(td);
     });
-    
+
     tableBody.appendChild(tr);
   });
 };
@@ -102,7 +105,7 @@ const initDashboard = async () => {
     ['Pos', 'Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts', 'Form'], 
     'all', fixtureData
   );
-  
+
   populateTable(fixtureData, 'fixtureTable', 
     ['Matchday', 'Home Team', 'Score', 'Away Team', 'Status']
   );
@@ -126,18 +129,18 @@ const initDashboard = async () => {
   document.getElementById('statusFilter').addEventListener('change', e => {
     const teamFilter = document.getElementById('fixtureFilter').value;
     let filtered = fixtureData;
-    
+
     if (teamFilter !== 'all') {
       filtered = filtered.filter(f => f['Home Team'] === teamFilter || f['Away Team'] === teamFilter);
     }
-    
+
     if (e.target.value !== 'all') {
       filtered = filtered.filter(f => 
         (e.target.value === 'completed' && f['Status'] === 'Completed') ||
         (e.target.value === 'scheduled' && f['Status'] !== 'Completed')
       );
     }
-    
+
     populateTable(filtered, 'fixtureTable', ['Matchday', 'Home Team', 'Score', 'Away Team', 'Status']);
   });
 };
