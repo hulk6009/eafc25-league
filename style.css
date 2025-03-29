@@ -2,12 +2,12 @@
   --primary-color: #4361ee;
   --secondary-color: #3a0ca3;
   --accent-color: #4895ef;
-  --success-color: #4cc9f0;
   --win-color: #38b000;
   --lose-color: #d00000;
   --draw-color: #ffaa00;
   --light-color: #f8f9fa;
   --dark-color: #212529;
+  --success-color: #4cc9f0;
   --border-radius: 12px;
   --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   --transition: all 0.3s ease;
@@ -15,7 +15,7 @@
 
 body {
   font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f8f9fa;
+  background-color: var(--light-color);
   margin: 0;
   padding: 20px;
   color: var(--dark-color);
@@ -142,7 +142,7 @@ table tbody tr:hover {
 .result-win::before {
   content: "✓";
   position: absolute;
-  left: 0;
+  left: 5px;
   color: var(--win-color);
 }
 
@@ -156,7 +156,7 @@ table tbody tr:hover {
 .result-lose::before {
   content: "✗";
   position: absolute;
-  left: 0;
+  left: 5px;
   color: var(--lose-color);
 }
 
@@ -170,9 +170,40 @@ table tbody tr:hover {
 .result-draw::before {
   content: "=";
   position: absolute;
-  left: 0;
+  left: 5px;
   font-weight: bold;
   color: var(--draw-color);
+}
+
+/* Form indicators */
+.form-container {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.form-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.form-win {
+  background-color: var(--win-color);
+}
+
+.form-loss {
+  background-color: var(--lose-color);
+}
+
+.form-draw {
+  background-color: var(--draw-color);
 }
 
 /* Status badges */
@@ -183,22 +214,22 @@ table tbody tr:hover {
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-.status-win {
+.status-completed {
   background-color: rgba(56, 176, 0, 0.1);
   color: var(--win-color);
 }
 
-.status-lose {
-  background-color: rgba(208, 0, 0, 0.1);
-  color: var(--lose-color);
+.status-scheduled {
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-color);
 }
 
-.status-draw {
-  background-color: rgba(255, 170, 0, 0.1);
-  color: var(--draw-color);
+/* Highlight important numbers */
+.important-number {
+  font-weight: 700;
+  color: var(--secondary-color);
 }
 
 /* Modern scrollbar for tables */

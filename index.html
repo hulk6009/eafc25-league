@@ -5,58 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EAFC 25 League Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Form indicator styles - now rectangular */
-    .form-container {
-      display: flex;
-      gap: 3px;
-    }
-    
-    .form-indicator {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px; /* Slightly rounded corners */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: bold;
-      color: white;
-    }
-    
-    .form-win {
-      background-color: #38b000;
-    }
-    
-    .form-loss {
-      background-color: #d00000;
-    }
-    
-    .form-draw {
-      background-color: #ffaa00;
-    }
-    
-    /* Highlight important numbers */
-    .important-number {
-      font-weight: 700;
-      color: #3a0ca3;
-    }
-    
-    /* Add some spacing between tables */
-    h2 {
-      margin-top: 40px;
-    }
-    
-    /* Make form column header centered */
-    #leagueTable th:nth-child(11) {
-      text-align: center;
-    }
-    
-    /* Center form indicators in their cell */
-    #leagueTable td:nth-child(11) {
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -65,7 +13,6 @@
       <label for="teamFilter">Filter by Team:</label>
       <select id="teamFilter">
         <option value="all">All Teams</option>
-        <!-- Team options will be populated by JavaScript -->
       </select>
     </div>
     <table id="leagueTable">
@@ -80,56 +27,11 @@
           <th>GF</th>
           <th>GA</th>
           <th>GD</th>
-          <th class="important-number">Pts</th>
+          <th>Pts</th>
           <th>Form</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Example row - to be populated by JavaScript -->
-        <tr>
-          <td>1</td>
-          <td>Team A</td>
-          <td>5</td>
-          <td>4</td>
-          <td>1</td>
-          <td>0</td>
-          <td>12</td>
-          <td>3</td>
-          <td>+9</td>
-          <td class="important-number">13</td>
-          <td>
-            <div class="form-container">
-              <span class="form-indicator form-win">W</span>
-              <span class="form-indicator form-win">W</span>
-              <span class="form-indicator form-draw">D</span>
-              <span class="form-indicator form-win">W</span>
-              <span class="form-indicator form-win">W</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Team B</td>
-          <td>5</td>
-          <td>3</td>
-          <td>1</td>
-          <td>1</td>
-          <td>8</td>
-          <td>5</td>
-          <td>+3</td>
-          <td class="important-number">10</td>
-          <td>
-            <div class="form-container">
-              <span class="form-indicator form-loss">L</span>
-              <span class="form-indicator form-win">W</span>
-              <span class="form-indicator form-draw">D</span>
-              <span class="form-indicator form-win">W</span>
-              <span class="form-indicator form-win">W</span>
-            </div>
-          </td>
-        </tr>
-        <!-- More rows will be populated by JavaScript -->
-      </tbody>
+      <tbody></tbody>
     </table>
 
     <h2>Fixtures</h2>
@@ -137,7 +39,12 @@
       <label for="fixtureFilter">Filter by Team:</label>
       <select id="fixtureFilter">
         <option value="all">All Teams</option>
-        <!-- Team options will be populated by JavaScript -->
+      </select>
+      <label for="statusFilter" style="margin-left: 15px;">Status:</label>
+      <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="completed">Completed</option>
+        <option value="scheduled">Scheduled</option>
       </select>
     </div>
     <table id="fixtureTable">
@@ -150,17 +57,7 @@
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Example row - to be populated by JavaScript -->
-        <tr>
-          <td>6</td>
-          <td>Team A</td>
-          <td>2-1</td>
-          <td>Team B</td>
-          <td>Completed</td>
-        </tr>
-        <!-- More rows will be populated by JavaScript -->
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
   <script src="script.js"></script>
