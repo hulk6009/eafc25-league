@@ -15,9 +15,10 @@ const fetchSheetData = async (sheetName) => {
 };
 
 const getFormIndicators = (team, fixtures) => {
-  const teamFixtures = fixtures.filter(f => 
-    f['Home Team'] === team || f['Away Team'] === team
-  ).slice(0, 5); // Get last 5 matches
+  const teamFixtures = fixtures
+    .filter(f => f['Home Team'] === team || f['Away Team'] === team)
+    .sort((a, b) => parseInt(b['Matchday']) - parseInt(a['Matchday'])) // sort by most recent
+    .slice(0, 5); // Get last 5 matches
 
   return teamFixtures.map(f => {
     const homeScore = f['Home Score'];
