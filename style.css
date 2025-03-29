@@ -1,10 +1,13 @@
 :root {
   --primary-color: #4361ee;
-  --secondary-color: #3f37c9;
+  --secondary-color: #3a0ca3;
   --accent-color: #4895ef;
+  --success-color: #4cc9f0;
+  --win-color: #38b000;
+  --lose-color: #d00000;
+  --draw-color: #ffaa00;
   --light-color: #f8f9fa;
   --dark-color: #212529;
-  --success-color: #4cc9f0;
   --border-radius: 12px;
   --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   --transition: all 0.3s ease;
@@ -126,6 +129,76 @@ table tbody tr:hover {
   background-color: rgba(72, 149, 239, 0.1);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Win/Lose/Draw indicators */
+.result-win {
+  color: var(--win-color);
+  font-weight: bold;
+  position: relative;
+  padding-left: 20px;
+}
+
+.result-win::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--win-color);
+}
+
+.result-lose {
+  color: var(--lose-color);
+  font-weight: bold;
+  position: relative;
+  padding-left: 20px;
+}
+
+.result-lose::before {
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: var(--lose-color);
+}
+
+.result-draw {
+  color: var(--draw-color);
+  font-weight: bold;
+  position: relative;
+  padding-left: 20px;
+}
+
+.result-draw::before {
+  content: "=";
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  color: var(--draw-color);
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-win {
+  background-color: rgba(56, 176, 0, 0.1);
+  color: var(--win-color);
+}
+
+.status-lose {
+  background-color: rgba(208, 0, 0, 0.1);
+  color: var(--lose-color);
+}
+
+.status-draw {
+  background-color: rgba(255, 170, 0, 0.1);
+  color: var(--draw-color);
 }
 
 /* Modern scrollbar for tables */
